@@ -48,6 +48,7 @@ pipeline {
             steps {
                     sh '''
                     gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project balmy-particle-334205
+                    cd $microservice
                     kubectl apply -f kubernetes/$microservice.yml
                     '''
                 }
