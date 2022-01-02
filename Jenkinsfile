@@ -42,6 +42,7 @@ pipeline {
         stage('Upload Image') {
             steps {
                     sh 'gcloud docker -- push us.gcr.io/balmy-particle-334205/$microservice-app:latest'
+                    sh 'docker rmi us.gcr.io/balmy-particle-334205/$microservice-app:latest'
                 }
             }
         stage('Deploy to GKS') {
