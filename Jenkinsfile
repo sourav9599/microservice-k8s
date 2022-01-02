@@ -44,18 +44,14 @@ pipeline {
                     sh 'gcloud docker -- push us.gcr.io/balmy-particle-334205/$microservice-app:latest'
                 }
             }
-        stage('Setting up GKS') {
+        stage('Deploy to GKS') {
             steps {
                     sh '''
                     gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project balmy-particle-334205
+                    kubectl apply -f kubernetes/$microservice.yml
                     '''
                 }
             }
-        stage('Deploy to AKS') {
-            steps {
-                kubernetesDeploy configs: 'kubernetes/', kubeConfig: [path: ''], kubeconfigId: 'kubeconfig', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
-            }
-        }
     }
        
 
